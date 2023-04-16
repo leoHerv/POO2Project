@@ -12,9 +12,9 @@ public class Controlleur extends Application
     {
         BorderPane base = new BorderPane();
 
-        Scene scene = new Scene(base, 160, 300);
+        Scene scene = new Scene(base, 600, 500);
 
-        primaryStage.setTitle("ApllicationJF");
+        primaryStage.setTitle("Jeux des Fourmis");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
