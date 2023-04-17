@@ -8,24 +8,25 @@ public class StringGridSizeProterty extends StringBinding
     private final SimpleIntegerProperty widthProperty;
     private final SimpleIntegerProperty heightProperty;
     private final String style;
-    private final int boxSize;
+    private final SimpleIntegerProperty boxSizeProperty;
 
     public StringGridSizeProterty(SimpleIntegerProperty widthProperty, SimpleIntegerProperty heightProperty,
-                                  String style, int boxSize)
+                                  String style, SimpleIntegerProperty boxSizeProperty)
     {
         super();
         this.widthProperty = widthProperty;
         this.heightProperty = heightProperty;
         this.style = style;
-        this.boxSize = boxSize;
-        bind(this.widthProperty, this.heightProperty);
+        this.boxSizeProperty = boxSizeProperty;
+        bind(this.widthProperty, this.heightProperty, this.boxSizeProperty);
     }
 
     @Override
     protected String computeValue()
     {
-        int width = widthProperty.getValue() * boxSize;
-        int height = heightProperty.getValue() * boxSize;
+        int sizeBox = boxSizeProperty.getValue();
+        int width = widthProperty.getValue() * sizeBox;
+        int height = heightProperty.getValue() * sizeBox;
 
         return  "-fx-min-width: " + width + "px;" +
                 "-fx-min-height: " + height + "px;" +

@@ -10,8 +10,12 @@ public class TestGrid extends Application
     @Override
     public void start(Stage primaryStage)
     {
+        int start = 0;
+        int end = 10;
+
 
         Grid grid = new Grid(true, 10);
+        grid.setGridSize(end - start);
 
         int[][] seeds = {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -23,7 +27,7 @@ public class TestGrid extends Application
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-        grid.drawSeedsOnGrid(seeds, 10);
+        grid.drawSeedsOnGrid(seeds, 10, start, start, end, end);
         boolean[][] walls = {{false, false, false, false, false, false, false, false, false, false},
                             {false, false, false, false, false, false, false, false, false, false},
                             {false, false, false, false, false, false, false, false, false, false},
@@ -34,7 +38,7 @@ public class TestGrid extends Application
                             {false, false, false, false, false, false, false, false, false, false},
                             {true, true, true, true, true, true, true, true, true, true},
                             {true, true, true, true, true, true, true, true, true, true}};
-        grid.drawWallsOnGrid(walls);
+        grid.drawWallsOnGrid(walls, start, start, end, end);
         int[][] ants = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                         {0, 0, 2, 0, 2, 0, 0, 0, 0, 0},
                         {0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
@@ -45,8 +49,8 @@ public class TestGrid extends Application
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-        grid.drawAntsOnGrid(ants);
-        grid.drawGrid();
+        grid.drawAntsOnGrid(ants, start, start, end, end);
+        grid.drawGrid(start, start, end, end);
 
         //grid.clearGrid();
 
