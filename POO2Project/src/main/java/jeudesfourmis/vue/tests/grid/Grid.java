@@ -26,10 +26,10 @@ public class Grid extends Pane
     public static final String GRID_STYLE = "-fx-background-color: ghostwhite;";
     public static final String LINE_STYLE = "-fx-fill : black;";
 
-    private SimpleBooleanProperty displayGridProperty;
-    private SimpleIntegerProperty widthGridProperty;
-    private SimpleIntegerProperty heightGridProperty;
-    private SimpleIntegerProperty sizeBoxProperty;
+    private final SimpleBooleanProperty displayGridProperty;
+    private final SimpleIntegerProperty widthGridProperty;
+    private final SimpleIntegerProperty heightGridProperty;
+    private final SimpleIntegerProperty sizeBoxProperty;
 
     /**
      * On crée une grille de taille gridSize.
@@ -267,4 +267,19 @@ public class Grid extends Pane
         this.getChildren().clear();
     }
 
+    public void allDraw(int[][] seedsArray, int qMax, boolean[][] wallsArray, int[][] antsArray, int minX, int minY, int maxX, int maxY)
+    {
+        this.drawGrid(minX, minY, maxX, maxY);
+        this.drawSeedsOnGrid(seedsArray, qMax, minX, minY, maxX, maxY);
+        this.drawWallsOnGrid(wallsArray, minX, minY, maxX, maxY);
+        this.drawAntsOnGrid(antsArray, minX, minY, maxX, maxY);
+    }
+
+    public void allDraw(int[][] seedsArray, int qMax, boolean[][] wallsArray, int[][] antsArray)
+    {
+        this.drawGrid();
+        this.drawSeedsOnGrid(seedsArray, qMax);
+        this.drawWallsOnGrid(wallsArray);
+        this.drawAntsOnGrid(antsArray);
+    }
 }
