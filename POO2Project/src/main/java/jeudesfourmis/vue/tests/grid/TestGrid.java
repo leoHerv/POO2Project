@@ -14,7 +14,7 @@ public class TestGrid extends Application
         int end = 7;
         int size = 50;
 
-        Grid grid = new Grid(true, size, 10);
+        GridEditable grid = new GridEditable(true, size);
         //grid.setGridSize(end - start);
         /*
         int[][] seeds = {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
@@ -126,12 +126,12 @@ public class TestGrid extends Application
 
         /////////////////////////////////
         Grid gridClone = new Grid(true, end - start, 20);
-        gridClone.allDraw(seeds, 10, walls, ants, start, start, end, end);
+        gridClone.allDraw(seeds, 10, walls, ants, start,  end);
 
         BorderPane autreBase = new BorderPane();
         autreBase.setCenter(gridClone);
 
-        Scene autreScene = new Scene(autreBase, 700, 600);
+        Scene autreScene = new Scene(autreBase, 200, 200);
 
         Stage autreStage = new Stage();
         autreStage.setTitle("Autre scene");
