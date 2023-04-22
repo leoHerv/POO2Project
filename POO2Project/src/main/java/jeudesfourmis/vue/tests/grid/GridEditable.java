@@ -206,30 +206,6 @@ public class GridEditable extends Grid
     }
 
     /**
-     * Retourne le tableau de graines.
-     */
-    public int[][] getSeedsArray()
-    {
-        return this.seedsArray;
-    }
-
-    /**
-     * Retourne le tableau de murs.
-     */
-    public boolean[][] getWallsArray()
-    {
-        return this.wallsArray;
-    }
-
-    /**
-     * Retourne le tableau de fourmis.
-     */
-    public int[][] getAntsArray()
-    {
-        return this.antsArray;
-    }
-
-    /**
      * Regarde si il y a une graine sur la case.
      *
      * @param x : la position x de la case.

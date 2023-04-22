@@ -1,7 +1,11 @@
 package jeudesfourmis.vue.tests.grid;
 
 import javafx.application.Application;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -155,11 +159,43 @@ public class TestGrid extends Application
             }
 
             System.out.println("Good :" + posX + " " + posY);
-/*
-            gridClone.allDraw(grid.getSeedsArray(), 10, grid.getWallsArray(),
-                    grid.getAntsArray(), posX - 5, posY - 5, 11);*/
-            gridClone.allDraw(seeds, 10, walls, ants, posX - 5, posY - 5, 11);
+
+
         });
+
+        ChangeListener<Number> xyMove = new ChangeListener<Number>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
+            {
+                int posX = grid.getPosPointerX().getValue();
+                int posY = grid.getPosPointerY().getValue();
+
+                System.out.println(posX + " " + posY);
+
+                if(posX < 6)
+                {
+                    posX = 5;
+                }
+                if(posY < 6)
+                {
+                    posY = 5;
+                }
+                if(posX > size - 6)
+                {
+                    posX = size - 6;
+                }
+                if(posY >= size - 6)
+                {
+                    posY = size - 6;
+                }
+
+                gridClone.allDraw(seeds, 10, walls, ants, posX - 5, posY - 5, 11);
+            }
+        };
+
+        grid.getPosPointerX().addListener(xyMove);
+        grid.getPosPointerY().addListener(xyMove);
 
         BorderPane autreBase = new BorderPane();
         autreBase.setCenter(gridClone);
