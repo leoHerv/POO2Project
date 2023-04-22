@@ -1,14 +1,13 @@
 package jeudesfourmis.vue.tests.grid;
 
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
 public class GridEditable extends Grid
 {
-    protected SimpleBooleanProperty isEditableProperty;
-
     protected int[][] seedsArray;
     protected int qMax;
     protected boolean[][] wallsArray;
@@ -19,6 +18,11 @@ public class GridEditable extends Grid
     protected boolean isCurrentlyRemoveWall;
     protected boolean isCurrentlyAddAnt;
     protected boolean isCurrentlyRemoveAnt;
+
+    protected SimpleBooleanProperty isEditableProperty;
+
+    protected SimpleIntegerProperty posPointerX;
+    protected SimpleIntegerProperty posPointerY;
 
     public GridEditable(boolean displayGrid, int gridSize, int[][] seedsArray, int qMax, boolean[][] wallsArray, int[][] antsArray)
     {
@@ -34,6 +38,9 @@ public class GridEditable extends Grid
         this.isCurrentlyRemoveAnt = false;
 
         this.isEditableProperty = new SimpleBooleanProperty(true);
+
+        this.posPointerX = new SimpleIntegerProperty(gridSize / 2);
+        this.posPointerY = new SimpleIntegerProperty(gridSize / 2);
 
         EventHandler<MouseEvent> handleStartDrag = new EventHandler<>()
         {
@@ -119,6 +126,22 @@ public class GridEditable extends Grid
             }
         };
 
+        EventHandler<MouseEvent> handlePosPointer = new EventHandler<>()
+        {
+            @Override
+            public void handle(MouseEvent event)
+            {
+                int x = (int) event.getX();
+                int y = (int) event.getY();
+
+                int caseX = x / sizeBoxProperty.getValue();
+                int caseY = y / sizeBoxProperty.getValue();
+
+                posPointerX.setValue(caseX);
+                posPointerY.setValue(caseY);
+            }
+        };
+
         EventHandler<ScrollEvent> handleOnScroll = new EventHandler<>()
         {
             @Override
@@ -134,7 +157,6 @@ public class GridEditable extends Grid
 
                 int yScroll = (int) event.getDeltaY();
 
-                System.out.println(yScroll);
                 if(caseX >= 0 && caseY >= 0 && caseX < sizeGrid && caseY < sizeGrid && yScroll != 0)
                 {
                     if(yScroll > 0)
@@ -153,6 +175,9 @@ public class GridEditable extends Grid
         this.addEventHandler(MouseEvent.MOUSE_PRESSED, handleStartDrag);
         this.addEventHandler(MouseEvent.MOUSE_RELEASED, handleEndDrag);
         this.addEventHandler(MouseEvent.MOUSE_DRAGGED, handleOnDrag);
+
+        this.addEventHandler(MouseEvent.MOUSE_MOVED, handlePosPointer);
+
         this.addEventHandler(ScrollEvent.SCROLL, handleOnScroll);
     }
 
@@ -162,6 +187,46 @@ public class GridEditable extends Grid
     public SimpleBooleanProperty getIsEditableProperty()
     {
         return this.isEditableProperty;
+    }
+
+    /**
+     * Retourne posPointerX pour avoir la position en X de la souris.
+     */
+    public SimpleIntegerProperty getPosPointerX()
+    {
+        return this.posPointerX;
+    }
+
+    /**
+     * Retourne posPointerX pour avoir la position en Y de la souris.
+     */
+    public SimpleIntegerProperty getPosPointerY()
+    {
+        return this.posPointerY;
+    }
+
+    /**
+     * Retourne le tableau de graines.
+     */
+    public int[][] getSeedsArray()
+    {
+        return this.seedsArray;
+    }
+
+    /**
+     * Retourne le tableau de murs.
+     */
+    public boolean[][] getWallsArray()
+    {
+        return this.wallsArray;
+    }
+
+    /**
+     * Retourne le tableau de fourmis.
+     */
+    public int[][] getAntsArray()
+    {
+        return this.antsArray;
     }
 
     /**

@@ -1,7 +1,9 @@
 package jeudesfourmis.vue.tests.grid;
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -109,7 +111,7 @@ public class TestGrid extends Application
         //grid.drawGrid(start, start, end, end);
 
         GridEditable grid = new GridEditable(true, size, seeds, 10, walls, ants);
-        grid.setSizeBox(20);
+        //grid.setSizeBox(20);
        //grid.allDraw();
 
         //grid.clearGrid();
@@ -125,13 +127,45 @@ public class TestGrid extends Application
 
 
         /////////////////////////////////
-        Grid gridClone = new Grid(true, end - start, 20);
-        gridClone.allDraw(seeds, 10, walls, ants, start,  end);
+        Grid gridClone = new Grid(true, 11, 20);
+
+        Button btn = new Button("Reset loupe");
+        btn.setOnAction(event ->
+        {
+            int posX = grid.getPosPointerX().getValue();
+            int posY = grid.getPosPointerY().getValue();
+
+            System.out.println(posX + " " + posY);
+
+            if(posX < 6)
+            {
+                posX = 5;
+            }
+            if(posY < 6)
+            {
+                posY = 5;
+            }
+            if(posX > size - 6)
+            {
+                posX = size - 6;
+            }
+            if(posY >= size - 6)
+            {
+                posY = size - 6;
+            }
+
+            System.out.println("Good :" + posX + " " + posY);
+/*
+            gridClone.allDraw(grid.getSeedsArray(), 10, grid.getWallsArray(),
+                    grid.getAntsArray(), posX - 5, posY - 5, 11);*/
+            gridClone.allDraw(seeds, 10, walls, ants, posX - 5, posY - 5, 11);
+        });
 
         BorderPane autreBase = new BorderPane();
         autreBase.setCenter(gridClone);
+        autreBase.setRight(btn);
 
-        Scene autreScene = new Scene(autreBase, 200, 200);
+        Scene autreScene = new Scene(autreBase, 500, 400);
 
         Stage autreStage = new Stage();
         autreStage.setTitle("Autre scene");

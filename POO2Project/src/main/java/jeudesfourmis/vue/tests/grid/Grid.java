@@ -79,28 +79,23 @@ public class Grid extends Pane
     /**
      * Permet d'afficher certaines lignes de la grille ou non selon la valeur de displayGridProperty.
      *
-     * @param minXY : le minimum de la boucle sur l'axe X et Y.
-     * @param maxXY : le maximum de la boucle sur l'axe X et Y.
+     * @param size : la taille du carré que l'on va dessiner.
      */
-    public void drawGrid(int minXY, int maxXY)
+    public void drawGrid(int size)
     {
         if(this.displayGridProperty.getValue())
         {
             int boxSize = sizeBoxProperty.getValue();
             // Lignes horizontales.
-            for(int i = minXY; i <= maxXY; i++)
+            for(int i = 0; i <= size; i++)
             {
-                int iModif = i - minXY;
-                int maxXModif = maxXY - minXY;
-                CustomLine line = new CustomLine(0, iModif * boxSize, maxXModif * boxSize, iModif * boxSize,
+                CustomLine line = new CustomLine(0, i * boxSize, size * boxSize, i * boxSize,
                         LINE_STYLE, this);
             }
             // Lignes verticales.
-            for(int j = minXY; j <= maxXY; j++)
+            for(int j = 0; j <= size; j++)
             {
-                int jModif = j - minXY;
-                int maxYModif = maxXY - minXY;
-                CustomLine line = new CustomLine(jModif * boxSize, 0, jModif * boxSize, maxYModif * boxSize,
+                CustomLine line = new CustomLine(j * boxSize, 0, j * boxSize, size * boxSize,
                         LINE_STYLE, this);
             }
         }
@@ -113,7 +108,7 @@ public class Grid extends Pane
     public void drawGrid()
     {
         int size = this.sizeGridProperty.getValue();
-        this.drawGrid(0, size);
+        this.drawGrid(size);
     }
 
     /**
@@ -121,11 +116,12 @@ public class Grid extends Pane
      *
      *  @param seedsArray : le tableau de graines à afficher.
      *  @param qMax : le nombre maximal de graines sur une case.
-     *  @param minXY : le minimum de la boucle sur l'axe X et Y.
-     *  @param maxXY : le maximum de la boucle sur l'axe X et Y.
+     *  @param x : la position x par laquelle on commence à dessiner.
+     *  @param y : la position y par laquelle on commence à dessiner.
+     *  @param size : la taille du carré que l'on va dessiner.
      *
      */
-    public void drawSeedsOnGrid(int[][] seedsArray, int qMax, int minXY, int maxXY)
+    public void drawSeedsOnGrid(int[][] seedsArray, int qMax, int x, int y, int size)
     {
         int boxSize = sizeBoxProperty.getValue();
         int colorIncrement = (RGB_SEED_MAX - RGB_SEED_MIN) / qMax;
@@ -133,16 +129,17 @@ public class Grid extends Pane
         {
             colorIncrement = 1;
         }
-
-        for(int i = minXY; i < maxXY; i++)
+        // 0 11
+        for(int i = x; i < size + x; i++)
         {
-            int iModif = i - minXY;
-            for(int j = minXY; j < maxXY; j++)
+            int iModif = i - x;
+            // 11 11
+            for(int j = y; j < size + y; j++)
             {
                 int nbSeedInBox = seedsArray[i][j];
                 if(nbSeedInBox > 0)
                 {
-                    int jModif = j - minXY;
+                    int jModif = j - y;
                     int greenAndBlueLevel = colorIncrement * (qMax - nbSeedInBox);
                     Color colorSeed = Color.rgb(RGB_SEED_RED, greenAndBlueLevel, greenAndBlueLevel);
                     // Sans le +0.5 : problème de rendu.
@@ -163,27 +160,28 @@ public class Grid extends Pane
     public void drawSeedsOnGrid(int[][] seedsArray, int qMax)
     {
         int arraySizeXY = seedsArray.length;
-        this.drawSeedsOnGrid(seedsArray, qMax, 0, arraySizeXY);
+        this.drawSeedsOnGrid(seedsArray, qMax, 0, 0, arraySizeXY);
     }
 
     /**
      * Permet d'afficher certains des murs sur la grille.
      *
      * @param wallsArray : le tableau de graines à afficher.
-     * @param minXY : le minimum de la boucle sur l'axe X et Y.
-     * @param maxXY : le maximum de la boucle sur l'axe X et Y.
+     * @param x : la position x par laquelle on commence à dessiner.
+     * @param y : la position y par laquelle on commence à dessiner.
+     * @param size : la taille du carré que l'on va dessiner.
      */
-    public void drawWallsOnGrid(boolean[][] wallsArray, int minXY, int maxXY)
+    public void drawWallsOnGrid(boolean[][] wallsArray, int x, int y, int size)
     {
         int boxSize = sizeBoxProperty.getValue();
-        for(int i = minXY; i < maxXY; i++)
+        for(int i = x; i < size + x; i++)
         {
-            int iModif = i - minXY;
-            for(int j = minXY; j < maxXY; j++)
+            int iModif = i - x;
+            for(int j = y; j < size + y; j++)
             {
                 if(wallsArray[i][j])
                 {
-                    int jModif = j - minXY;
+                    int jModif = j - y;
                     // Sans le +0.5 : problème de rendu.
                     Rectangle wall = new Rectangle(boxSize + 0.5, boxSize + 0.5, COLOR_WALL);
                     wall.setMouseTransparent(true);
@@ -201,7 +199,7 @@ public class Grid extends Pane
     public void drawWallsOnGrid(boolean[][] wallsArray)
     {
         int arraySizeXY = wallsArray.length;
-        this.drawWallsOnGrid(wallsArray, 0, arraySizeXY);
+        this.drawWallsOnGrid(wallsArray, 0, 0, arraySizeXY);
     }
 
     /**
@@ -209,21 +207,22 @@ public class Grid extends Pane
      *
      * @param antsArray : le tableau de fourmis à afficher.
      *                  (0: pas de fourmi, 1: fourmi sans graine, 2: fourmi avec graine)
-     * @param minXY : le minimum de la boucle sur l'axe X et Y.
-     * @param maxXY : le maximum de la boucle sur l'axe X et Y.
+     * @param x : la position x par laquelle on commence à dessiner.
+     * @param y : la position y par laquelle on commence à dessiner.
+     * @param size : la taille du carré que l'on va dessiner.
      */
-    public void drawAntsOnGrid(int[][] antsArray, int minXY, int maxXY)
+    public void drawAntsOnGrid(int[][] antsArray, int x, int y, int size)
     {
         int boxSize = sizeBoxProperty.getValue();
-        for(int i = minXY; i < maxXY; i++)
+        for(int i = x; i < size + x; i++)
         {
-            int iModif = i - minXY;
-            for(int j = minXY; j < maxXY; j++)
+            int iModif = i - x;
+            for(int j = y; j < size + y; j++)
             {
                 int antState = antsArray[i][j];
                 if(antState == 1 || antState == 2)
                 {
-                    int jModif = j - minXY;
+                    int jModif = j - y;
                     Color antColor = antState == 1 ? COLOR_ANT : COLOR_ANT_SEED;
                     int toCenter = boxSize / 2;
                     Circle ant = new Circle(iModif * boxSize + toCenter, jModif * boxSize + toCenter,
@@ -241,7 +240,7 @@ public class Grid extends Pane
     public void drawAntsOnGrid(int[][] antsArray)
     {
         int arraySizeXY = antsArray.length;
-        this.drawAntsOnGrid(antsArray, 0, arraySizeXY);
+        this.drawAntsOnGrid(antsArray, 0, 0, arraySizeXY);
     }
 
     /**
@@ -261,16 +260,17 @@ public class Grid extends Pane
      * @param wallsArray : le tableau de graines à afficher.
      * @param antsArray : le tableau de fourmis à afficher.
      *                  (0: pas de fourmi, 1: fourmi sans graine, 2: fourmi avec graine)
-     * @param minXY : le minimum de la boucle sur l'axe X et Y.
-     * @param maxXY : le maximum de la boucle sur l'axe X et Y.
+     * @param x : la position x par laquelle on commence à dessiner.
+     * @param y : la position y par laquelle on commence à dessiner.
+     * @param size : la taille du carré que l'on va dessiner.
      */
-    public void allDraw(int[][] seedsArray, int qMax, boolean[][] wallsArray, int[][] antsArray, int minXY, int maxXY)
+    public void allDraw(int[][] seedsArray, int qMax, boolean[][] wallsArray, int[][] antsArray, int x, int y, int size)
     {
         this.clearGrid();
-        this.drawSeedsOnGrid(seedsArray, qMax, minXY, maxXY);
-        this.drawWallsOnGrid(wallsArray, minXY, maxXY);
-        this.drawAntsOnGrid(antsArray, minXY, maxXY);
-        this.drawGrid(minXY, maxXY);
+        this.drawSeedsOnGrid(seedsArray, qMax, x, y, size);
+        this.drawWallsOnGrid(wallsArray, x, y, size);
+        this.drawAntsOnGrid(antsArray, x, y, size);
+        this.drawGrid(size);
     }
 
     /**
