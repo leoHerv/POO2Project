@@ -3,6 +3,7 @@ package jeudesfourmis.vue.tests.grid;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 
 public class GridEditable extends Grid
 {
@@ -118,9 +119,41 @@ public class GridEditable extends Grid
             }
         };
 
+        EventHandler<ScrollEvent> handleOnScroll = new EventHandler<>()
+        {
+            @Override
+            public void handle(ScrollEvent event)
+            {
+                int x = (int) event.getX();
+                int y = (int) event.getY();
+
+                int caseX = x / sizeBoxProperty.getValue();
+                int caseY = y / sizeBoxProperty.getValue();
+
+                int sizeGrid = sizeGridProperty.getValue();
+
+                int yScroll = (int) event.getDeltaY();
+
+                System.out.println(yScroll);
+                if(caseX >= 0 && caseY >= 0 && caseX < sizeGrid && caseY < sizeGrid && yScroll != 0)
+                {
+                    if(yScroll > 0)
+                    {
+                        setSeeds(caseX, caseY, 1);
+                    }
+                    if(yScroll < 0)
+                    {
+                        setSeeds(caseX, caseY, -1);
+                    }
+                    allDraw();
+                }
+            }
+        };
+
         this.addEventHandler(MouseEvent.MOUSE_PRESSED, handleStartDrag);
         this.addEventHandler(MouseEvent.MOUSE_RELEASED, handleEndDrag);
         this.addEventHandler(MouseEvent.MOUSE_DRAGGED, handleOnDrag);
+        this.addEventHandler(ScrollEvent.SCROLL, handleOnScroll);
     }
 
     /**
