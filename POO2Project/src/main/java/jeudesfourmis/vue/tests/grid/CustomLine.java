@@ -9,6 +9,7 @@ public class CustomLine extends Line
     {
         super(xStart, yStart, xEnd, yEnd);
         this.setStyle(style);
+        this.setMouseTransparent(true);
         pane.getChildren().add(this);
     }
 }

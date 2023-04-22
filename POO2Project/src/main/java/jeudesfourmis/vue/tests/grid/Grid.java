@@ -147,6 +147,7 @@ public class Grid extends Pane
                     Color colorSeed = Color.rgb(RGB_SEED_RED, greenAndBlueLevel, greenAndBlueLevel);
                     // Sans le +0.5 : problème de rendu.
                     Rectangle seeds = new Rectangle(boxSize + 0.5, boxSize + 0.5, colorSeed);
+                    seeds.setMouseTransparent(true);
                     seeds.setX(iModif * boxSize);
                     seeds.setY(jModif * boxSize);
                     this.getChildren().add(seeds);
@@ -185,6 +186,7 @@ public class Grid extends Pane
                     int jModif = j - minXY;
                     // Sans le +0.5 : problème de rendu.
                     Rectangle wall = new Rectangle(boxSize + 0.5, boxSize + 0.5, COLOR_WALL);
+                    wall.setMouseTransparent(true);
                     wall.setX(iModif * boxSize);
                     wall.setY(jModif * boxSize);
                     this.getChildren().add(wall);
@@ -226,6 +228,7 @@ public class Grid extends Pane
                     int toCenter = boxSize / 2;
                     Circle ant = new Circle(iModif * boxSize + toCenter, jModif * boxSize + toCenter,
                             boxSize / 2, antColor);
+                    ant.setMouseTransparent(true);
                     this.getChildren().add(ant);
                 }
             }
@@ -264,10 +267,10 @@ public class Grid extends Pane
     public void allDraw(int[][] seedsArray, int qMax, boolean[][] wallsArray, int[][] antsArray, int minXY, int maxXY)
     {
         this.clearGrid();
-        this.drawGrid(minXY, maxXY);
         this.drawSeedsOnGrid(seedsArray, qMax, minXY, maxXY);
         this.drawWallsOnGrid(wallsArray, minXY, maxXY);
         this.drawAntsOnGrid(antsArray, minXY, maxXY);
+        this.drawGrid(minXY, maxXY);
     }
 
     /**
@@ -282,9 +285,9 @@ public class Grid extends Pane
     public void allDraw(int[][] seedsArray, int qMax, boolean[][] wallsArray, int[][] antsArray)
     {
         this.clearGrid();
-        this.drawGrid();
         this.drawSeedsOnGrid(seedsArray, qMax);
         this.drawWallsOnGrid(wallsArray);
         this.drawAntsOnGrid(antsArray);
+        this.drawGrid();
     }
 }

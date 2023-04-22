@@ -12,10 +12,8 @@ public class TestGrid extends Application
     {
         int start = 1;
         int end = 7;
-        int size = 50;
+        int size = 30;
 
-        GridEditable grid = new GridEditable(true, size);
-        //grid.setGridSize(end - start);
         /*
         int[][] seeds = {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -110,7 +108,9 @@ public class TestGrid extends Application
         //grid.drawAntsOnGrid(ants, start, start, end, end);
         //grid.drawGrid(start, start, end, end);
 
-        grid.allDraw(seeds, 10, walls, ants);
+        GridEditable grid = new GridEditable(true, size, seeds, 10, walls, ants);
+        grid.setSizeBox(20);
+       //grid.allDraw();
 
         //grid.clearGrid();
 
