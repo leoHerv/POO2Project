@@ -1,27 +1,25 @@
-package jeudesfourmis.vue.tests.grid;
+package jeudesfourmis.vue.board;
 
 import javafx.application.Application;
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import jeudesfourmis.vue.board.BoardEditable;
+import jeudesfourmis.vue.board.BoardWithZoomBoard;
 
 public class TestGrid extends Application
 {
     @Override
     public void start(Stage primaryStage)
     {
+        /*
         int start = 1;
         int end = 7;
         int size = 30;
 
-        /*
+
         int[][] seeds = {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -31,7 +29,7 @@ public class TestGrid extends Application
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};*/
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
         int[][] seeds = new int[size][size];
         for(int i = 0; i < size; i++)
         {
@@ -50,7 +48,7 @@ public class TestGrid extends Application
             seeds[i] = seed;
         }
         //grid.drawSeedsOnGrid(seeds, 10, start, start, end, end);
-        /*
+
         boolean[][] walls = {{false, false, false, false, false, false, false, false, false, false},
                             {false, false, false, false, false, false, false, false, false, false},
                             {false, false, false, false, false, false, false, false, false, false},
@@ -60,7 +58,7 @@ public class TestGrid extends Application
                             {false, false, false, false, false, false, false, false, false, false},
                             {false, false, false, false, false, false, false, false, false, false},
                             {true, true, true, true, true, true, true, true, true, true},
-                            {true, true, true, true, true, true, true, true, true, true}};*/
+                            {true, true, true, true, true, true, true, true, true, true}};
 
         boolean[][] walls = new boolean[size][size];
         for(int i = 0; i < size; i++)
@@ -80,7 +78,7 @@ public class TestGrid extends Application
             walls[i] = wall;
         }
         //grid.drawWallsOnGrid(walls, start, start, end, end);
-        /*
+
         int[][] ants = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                         {0, 0, 2, 0, 2, 0, 0, 0, 0, 0},
                         {0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
@@ -90,7 +88,7 @@ public class TestGrid extends Application
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};*/
+                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
         int[][] ants = new int[size][size];
         for(int i = 0; i < size; i++)
         {
@@ -117,7 +115,7 @@ public class TestGrid extends Application
 
         SimpleBooleanProperty bp = new SimpleBooleanProperty(false);
 
-        GridEditable grid = new BoardWithZoomBoard(true, size, seeds, 10, walls, ants, bp);
+        //BoardEditable grid = new BoardWithZoomBoard(true, size, seeds, 10, walls, ants, bp);
         //grid.setSizeBox(20);
        //grid.allDraw();
 
@@ -135,9 +133,10 @@ public class TestGrid extends Application
 
         Scene scene = new Scene(base, 700, 600);
 
-        primaryStage.setTitle("Test Grid");
+        primaryStage.setTitle("Test Board");
         primaryStage.setScene(scene);
         primaryStage.show();
+        */
     }
 
     public static void main(String[] args)

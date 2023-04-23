@@ -1,4 +1,4 @@
-package jeudesfourmis.vue.tests.grid;
+package jeudesfourmis.vue.board;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;

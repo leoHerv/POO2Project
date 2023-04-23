@@ -1,15 +1,15 @@
-package jeudesfourmis.vue.tests.grid;
+package jeudesfourmis.vue.board;
 
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class StringGridSizeProperty extends StringBinding
+public class StringBoardSizeProperty extends StringBinding
 {
     private final SimpleIntegerProperty sizeProperty;
     private final String style;
     private final SimpleIntegerProperty boxSizeProperty;
 
-    public StringGridSizeProperty(SimpleIntegerProperty sizeProperty, String style, SimpleIntegerProperty boxSizeProperty)
+    public StringBoardSizeProperty(SimpleIntegerProperty sizeProperty, String style, SimpleIntegerProperty boxSizeProperty)
     {
         super();
         this.sizeProperty = sizeProperty;

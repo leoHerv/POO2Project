@@ -1,4 +1,4 @@
-package jeudesfourmis.vue.tests.grid;
+package jeudesfourmis.vue.board;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -6,7 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
-public class GridEditable extends Grid
+public class BoardEditable extends Board
 {
     protected int[][] seedsArray;
     protected int qMax;
@@ -24,9 +24,9 @@ public class GridEditable extends Grid
     protected SimpleIntegerProperty posPointerX;
     protected SimpleIntegerProperty posPointerY;
 
-    public GridEditable(boolean displayGrid, int gridSize, int[][] seedsArray, int qMax, boolean[][] wallsArray, int[][] antsArray)
+    public BoardEditable(boolean displayBoard, int boardSize, int[][] seedsArray, int qMax, boolean[][] wallsArray, int[][] antsArray)
     {
-        super(displayGrid, gridSize);
+        super(displayBoard, boardSize);
         this.seedsArray = seedsArray;
         this.qMax = qMax;
         this.wallsArray = wallsArray;
@@ -39,8 +39,8 @@ public class GridEditable extends Grid
 
         this.isEditableProperty = new SimpleBooleanProperty(true);
 
-        this.posPointerX = new SimpleIntegerProperty(gridSize / 2);
-        this.posPointerY = new SimpleIntegerProperty(gridSize / 2);
+        this.posPointerX = new SimpleIntegerProperty(boardSize / 2);
+        this.posPointerY = new SimpleIntegerProperty(boardSize / 2);
 
         EventHandler<MouseEvent> handleStartDrag = new EventHandler<>()
         {
@@ -55,9 +55,9 @@ public class GridEditable extends Grid
                     int caseX = x / sizeBoxProperty.getValue();
                     int caseY = y / sizeBoxProperty.getValue();
 
-                    int sizeGrid = sizeGridProperty.getValue();
+                    int sizeBoard = sizeBoardProperty.getValue();
 
-                    if(caseX >= 0 && caseY >= 0 && caseX < sizeGrid && caseY < sizeGrid)
+                    if(caseX >= 0 && caseY >= 0 && caseX < sizeBoard && caseY < sizeBoard)
                     {
                         if(event.isPrimaryButtonDown())
                         {
@@ -86,7 +86,7 @@ public class GridEditable extends Grid
                                 }
                             }
                         }
-                        drawOnGrid(caseX, caseY, event);
+                        drawOnBoard(caseX, caseY, event);
                     }
                 }
             }
@@ -116,11 +116,11 @@ public class GridEditable extends Grid
                     int caseX = x / sizeBoxProperty.getValue();
                     int caseY = y / sizeBoxProperty.getValue();
 
-                    int sizeGrid = sizeGridProperty.getValue();
+                    int sizeBoard = sizeBoardProperty.getValue();
 
-                    if(caseX >= 0 && caseY >= 0 && caseX < sizeGrid && caseY < sizeGrid)
+                    if(caseX >= 0 && caseY >= 0 && caseX < sizeBoard && caseY < sizeBoard)
                     {
-                        drawOnGrid(caseX, caseY, event);
+                        drawOnBoard(caseX, caseY, event);
                     }
                 }
             }
@@ -153,11 +153,11 @@ public class GridEditable extends Grid
                 int caseX = x / sizeBoxProperty.getValue();
                 int caseY = y / sizeBoxProperty.getValue();
 
-                int sizeGrid = sizeGridProperty.getValue();
+                int sizeBoard = sizeBoardProperty.getValue();
 
                 int yScroll = (int) event.getDeltaY();
 
-                if(caseX >= 0 && caseY >= 0 && caseX < sizeGrid && caseY < sizeGrid && yScroll != 0)
+                if(caseX >= 0 && caseY >= 0 && caseX < sizeBoard && caseY < sizeBoard && yScroll != 0)
                 {
                     if(yScroll > 0)
                     {
@@ -184,7 +184,7 @@ public class GridEditable extends Grid
     }
 
     /**
-     * Retourne isEditableProperty pour pouvoir modifier si la grille doit être modifiable ou non.
+     * Retourne isEditableProperty pour pouvoir modifier si le plateau est modifiable ou non.
      */
     public SimpleBooleanProperty getIsEditableProperty()
     {
@@ -205,6 +205,50 @@ public class GridEditable extends Grid
     public SimpleIntegerProperty getPosPointerY()
     {
         return this.posPointerY;
+    }
+
+    /**
+     * Retourne le tableau de graines.
+     */
+    public int[][] getSeedsArray()
+    {
+        return seedsArray;
+    }
+
+    /**
+     * Retourne le tableau de murs.
+     */
+    public boolean[][] getWallsArray()
+    {
+        return wallsArray;
+    }
+
+    /**
+     * Retourne le tableau de fourmis.
+     */
+    public int[][] getAntsArray()
+    {
+        return antsArray;
+    }
+
+    public void setSeedsArray(int[][] seedsArray)
+    {
+        this.seedsArray = seedsArray;
+    }
+
+    public void setqMax(int qMax)
+    {
+        this.qMax = qMax;
+    }
+
+    public void setWallsArray(boolean[][] wallsArray)
+    {
+        this.wallsArray = wallsArray;
+    }
+
+    public void setAntsArray(int[][] antsArray)
+    {
+        this.antsArray = antsArray;
     }
 
     /**
@@ -356,7 +400,7 @@ public class GridEditable extends Grid
      * @param y : la position y de la case.
      * @param me : mouseEvent qui nous permet de savoir si le click gauche ou shift + click gauche est en action.
      */
-    public void drawOnGrid(int x, int y, MouseEvent me)
+    public void drawOnBoard(int x, int y, MouseEvent me)
     {
         if(me.isPrimaryButtonDown())
         {

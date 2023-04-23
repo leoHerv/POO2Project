@@ -1,32 +1,38 @@
-package jeudesfourmis.vue.tests.grid;
+package jeudesfourmis.vue.board;
 
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class BoardWithZoomBoard extends GridEditable
+public class BoardWithZoomBoard extends BoardEditable
 {
 
-    public BoardWithZoomBoard(boolean displayGrid, int gridSize, int[][] seedsArray, int qMax,
-                              boolean[][] wallsArray, int[][] antsArray, SimpleBooleanProperty showZoomProperty)
+    public static final int ZOOM_SIZE_BOX = 30;
+    public static final int ZOOM_SIZE_BOARD = 11;
+
+    public BoardWithZoomBoard(boolean displayBoard, int boardSize, int[][] seedsArray, int qMax,
+                              boolean[][] wallsArray, int[][] antsArray, SimpleBooleanProperty showZoomProperty,
+                              SimpleIntegerProperty nbLapsProperty)
     {
-        super(displayGrid, gridSize, seedsArray, qMax, wallsArray, antsArray);
+        super(displayBoard, boardSize, seedsArray, qMax, wallsArray, antsArray);
 
         // On crée un autre plateau qui affiche le plateau en plus gros.
-        Grid boardZoom = new Grid(true, 11, 20);
-        boardZoom.allDraw(this.seedsArray, this.qMax, this.wallsArray, this.antsArray, 0, 0, 11);
+        Board boardZoom = new Board(true, ZOOM_SIZE_BOARD, ZOOM_SIZE_BOX);
+        boardZoom.allDraw(this.seedsArray, this.qMax, this.wallsArray, this.antsArray, 0, 0, ZOOM_SIZE_BOARD);
 
         BorderPane baseZoom = new BorderPane();
         baseZoom.setCenter(boardZoom);
 
-        Scene sceneZoom = new Scene(baseZoom, 500, 400);
+        Scene sceneZoom = new Scene(baseZoom, ZOOM_SIZE_BOARD * ZOOM_SIZE_BOX, ZOOM_SIZE_BOARD * ZOOM_SIZE_BOX);
 
         Stage stageZoom = new Stage();
         stageZoom.setTitle("Zoom");
         stageZoom.setScene(sceneZoom);
+        stageZoom.setResizable(false);
 
         // Si on appuie sur le bouton loupe on montre le plateau.
         showZoomProperty.addListener(event ->
@@ -53,7 +59,7 @@ public class BoardWithZoomBoard extends GridEditable
                 int posX = board.getPosPointerX().getValue();
                 int posY = board.getPosPointerY().getValue();
 
-                int boardSize = board.sizeGridProperty.getValue();
+                int boardSize = board.sizeBoardProperty.getValue();
 
                 // Pour ne pas afficher des cases dans le vide.
                 if(posX < 6)
@@ -73,11 +79,12 @@ public class BoardWithZoomBoard extends GridEditable
                     posY = boardSize - 6;
                 }
 
-                boardZoom.allDraw(board.seedsArray, board.qMax, board.wallsArray, board.antsArray, posX - 5, posY - 5, 11);
+                boardZoom.allDraw(board.seedsArray, board.qMax, board.wallsArray, board.antsArray, posX - 5, posY - 5, ZOOM_SIZE_BOARD);
             }
         };
 
-        board.getPosPointerX().addListener(xyMove);
-        board.getPosPointerY().addListener(xyMove);
+        this.getPosPointerX().addListener(xyMove);
+        this.getPosPointerY().addListener(xyMove);
+        nbLapsProperty.addListener(xyMove);
     }
 }

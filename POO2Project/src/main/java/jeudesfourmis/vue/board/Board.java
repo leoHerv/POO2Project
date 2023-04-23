@@ -1,4 +1,4 @@
-package jeudesfourmis.vue.tests.grid;
+package jeudesfourmis.vue.board;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -7,67 +7,67 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-public class Grid extends Pane
+public class Board extends Pane
 {
-    //=== Toutes les couleurs pour les différents affichage de la simulation. ===//
+    //=== Toutes les couleurs pour les différents affichages de la simulation. ===//
     public static final Color COLOR_ANT = Color.DARKGREEN;
     public static final Color COLOR_ANT_SEED = Color.DODGERBLUE;
     public static final Color COLOR_WALL = Color.BLACK;
-    // On utilisera le bleu et le vert pour faire un dégreder pour l'affichage des graines.
+    // On utilisera le bleu et le vert pour faire un dégrader pour l'affichage des graines.
     public static final int RGB_SEED_MIN = 50;
     public static final int RGB_SEED_MAX = 255;
     // La couleur rouge pour les graines.
     public static final int RGB_SEED_RED = 255;
 
     public static final int BOX_SIZE = 10;
-    public static final String GRID_STYLE = "-fx-background-color: ghostwhite;";
+    public static final String BOARD_STYLE = "-fx-background-color: ghostwhite;";
     public static final String LINE_STYLE = "-fx-fill : black;";
 
     protected final SimpleBooleanProperty displayGridProperty;
 
-    protected final SimpleIntegerProperty sizeGridProperty;
+    protected final SimpleIntegerProperty sizeBoardProperty;
 
     protected final SimpleIntegerProperty sizeBoxProperty;
 
     /**
-     * On crée une grille de taille gridSize.
+     * On crée un plateau de taille boardSize.
      *
-     * @param displayGrid : si on affiche les cases de la grille ou non.
-     * @param gridSize : la taille de la grille.
+     * @param displayGrid : si on affiche les cases du plateau ou non.
+     * @param boardSize : la taille du plateau.
      * @param boxSize : la taille des cases.
      */
-    public Grid(boolean displayGrid, int gridSize, int boxSize)
+    public Board(boolean displayGrid, int boardSize, int boxSize)
     {
         super();
         this.displayGridProperty = new SimpleBooleanProperty(displayGrid);
-        this.sizeGridProperty = new SimpleIntegerProperty(gridSize);
+        this.sizeBoardProperty = new SimpleIntegerProperty(boardSize);
         this.sizeBoxProperty = new SimpleIntegerProperty(boxSize);
 
-        StringGridSizeProperty gridStyleProperty =
-                new StringGridSizeProperty(this.sizeGridProperty, GRID_STYLE, this.sizeBoxProperty);
-        this.styleProperty().bind(gridStyleProperty);
+        StringBoardSizeProperty boardStyleProperty =
+                new StringBoardSizeProperty(this.sizeBoardProperty, BOARD_STYLE, this.sizeBoxProperty);
+        this.styleProperty().bind(boardStyleProperty);
     }
 
-    public Grid(boolean displayGrid, int gridSize)
+    public Board(boolean displayBoard, int boardSize)
     {
-        this(displayGrid, gridSize, BOX_SIZE);
+        this(displayBoard, boardSize, BOX_SIZE);
     }
 
     /**
-     * Permet de changer la taille de la grille mais pas en dessous de 20.
+     * Permet de changer la taille du plateau.
      *
-     * @param size : la nouvelle taille de la grille.
+     * @param size : la nouvelle taille du plateau.
      */
-    public void setGridSize(int size)
+    public void setBoardSize(int size)
     {
         if(size > 0)
         {
-            this.sizeGridProperty.setValue(size);
+            this.sizeBoardProperty.setValue(size);
         }
     }
 
     /**
-     * Permet de changer la taille des cases de la grille.
+     * Permet de changer la taille des cases du plateau.
      *
      * @param sizeBox : la nouvelle taille des cases.
      */
@@ -77,7 +77,15 @@ public class Grid extends Pane
     }
 
     /**
-     * Permet d'afficher certaines lignes de la grille ou non selon la valeur de displayGridProperty.
+     * Permet de changer l'affichage de la grille, soit oui, soit non.
+     */
+    public SimpleBooleanProperty getDisplayGridProperty()
+    {
+        return this.displayGridProperty;
+    }
+
+    /**
+     * Permet d'afficher certaines lignes du plateau ou non selon la valeur de displayBoardProperty.
      *
      * @param size : la taille du carré que l'on va dessiner.
      */
@@ -102,17 +110,17 @@ public class Grid extends Pane
     }
 
     /**
-     * Permet d'afficher les lignes de toute la grille ou non selon la valeur de displayGridProperty avec les valeurs
+     * Permet d'afficher les lignes de tout le plateau ou non selon la valeur de sizeBoardProperty avec les valeurs
      *  par defaut.
      */
     public void drawGrid()
     {
-        int size = this.sizeGridProperty.getValue();
+        int size = this.sizeBoardProperty.getValue();
         this.drawGrid(size);
     }
 
     /**
-     * Permet d'afficher certaines graines sur la grille, plus il y a de graines plus la couleur est intense.
+     * Permet d'afficher certaines graines sur le plateau, plus il y a de graines plus la couleur est intense.
      *
      *  @param seedsArray : le tableau de graines à afficher.
      *  @param qMax : le nombre maximal de graines sur une case.
@@ -121,7 +129,7 @@ public class Grid extends Pane
      *  @param size : la taille du carré que l'on va dessiner.
      *
      */
-    public void drawSeedsOnGrid(int[][] seedsArray, int qMax, int x, int y, int size)
+    public void drawSeedsOnBoard(int[][] seedsArray, int qMax, int x, int y, int size)
     {
         int boxSize = sizeBoxProperty.getValue();
         int colorIncrement = (RGB_SEED_MAX - RGB_SEED_MIN) / qMax;
@@ -154,24 +162,24 @@ public class Grid extends Pane
     }
 
     /**
-     * Permet d'afficher toutes les graines sur la grille avec les valeurs par defauts,
+     * Permet d'afficher toutes les graines sur le plateau avec les valeurs par defauts,
      * plus il y a de graines plus la couleur est intense.
      */
-    public void drawSeedsOnGrid(int[][] seedsArray, int qMax)
+    public void drawSeedsOnBoard(int[][] seedsArray, int qMax)
     {
         int arraySizeXY = seedsArray.length;
-        this.drawSeedsOnGrid(seedsArray, qMax, 0, 0, arraySizeXY);
+        this.drawSeedsOnBoard(seedsArray, qMax, 0, 0, arraySizeXY);
     }
 
     /**
-     * Permet d'afficher certains des murs sur la grille.
+     * Permet d'afficher certains des murs sur le plateau.
      *
      * @param wallsArray : le tableau de graines à afficher.
      * @param x : la position x par laquelle on commence à dessiner.
      * @param y : la position y par laquelle on commence à dessiner.
      * @param size : la taille du carré que l'on va dessiner.
      */
-    public void drawWallsOnGrid(boolean[][] wallsArray, int x, int y, int size)
+    public void drawWallsOnBoard(boolean[][] wallsArray, int x, int y, int size)
     {
         int boxSize = sizeBoxProperty.getValue();
         for(int i = x; i < size + x; i++)
@@ -194,16 +202,16 @@ public class Grid extends Pane
     }
 
     /**
-     * Permet d'afficher tous les murs sur la grille avec les valeurs par defauts.
+     * Permet d'afficher tous les murs sur le plateau avec les valeurs par defauts.
      */
-    public void drawWallsOnGrid(boolean[][] wallsArray)
+    public void drawWallsOnBoard(boolean[][] wallsArray)
     {
         int arraySizeXY = wallsArray.length;
-        this.drawWallsOnGrid(wallsArray, 0, 0, arraySizeXY);
+        this.drawWallsOnBoard(wallsArray, 0, 0, arraySizeXY);
     }
 
     /**
-     * Permet d'afficher certaines des fourmis sur la grille.
+     * Permet d'afficher certaines des fourmis sur le plateau.
      *
      * @param antsArray : le tableau de fourmis à afficher.
      *                  (0: pas de fourmi, 1: fourmi sans graine, 2: fourmi avec graine)
@@ -211,7 +219,7 @@ public class Grid extends Pane
      * @param y : la position y par laquelle on commence à dessiner.
      * @param size : la taille du carré que l'on va dessiner.
      */
-    public void drawAntsOnGrid(int[][] antsArray, int x, int y, int size)
+    public void drawAntsOnBoard(int[][] antsArray, int x, int y, int size)
     {
         int boxSize = sizeBoxProperty.getValue();
         for(int i = x; i < size + x; i++)
@@ -235,24 +243,24 @@ public class Grid extends Pane
     }
 
     /**
-     * Permet d'afficher toutes des fourmis sur la grille.
+     * Permet d'afficher toutes des fourmis sur le plateau.
      */
-    public void drawAntsOnGrid(int[][] antsArray)
+    public void drawAntsOnBoard(int[][] antsArray)
     {
         int arraySizeXY = antsArray.length;
-        this.drawAntsOnGrid(antsArray, 0, 0, arraySizeXY);
+        this.drawAntsOnBoard(antsArray, 0, 0, arraySizeXY);
     }
 
     /**
-     * Permet de supprimer tout ce qu'il y a sur la grille.
+     * Permet de supprimer tout ce qu'il y a sur le plateau.
      */
-    public void clearGrid()
+    public void clearBoard()
     {
         this.getChildren().clear();
     }
 
     /**
-     * Permet d'afficher sur la grille tous les elements (graines, fourmis et murs) avec un zoom sur la grille,
+     * Permet d'afficher sur le plateau tous les elements (graines, fourmis et murs) avec un zoom sur le plateau,
      * avec une zone allant de minXY à maxXY.
      *
      * @param seedsArray : le tableau de graines à afficher.
@@ -266,15 +274,15 @@ public class Grid extends Pane
      */
     public void allDraw(int[][] seedsArray, int qMax, boolean[][] wallsArray, int[][] antsArray, int x, int y, int size)
     {
-        this.clearGrid();
-        this.drawSeedsOnGrid(seedsArray, qMax, x, y, size);
-        this.drawWallsOnGrid(wallsArray, x, y, size);
-        this.drawAntsOnGrid(antsArray, x, y, size);
+        this.clearBoard();
+        this.drawSeedsOnBoard(seedsArray, qMax, x, y, size);
+        this.drawWallsOnBoard(wallsArray, x, y, size);
+        this.drawAntsOnBoard(antsArray, x, y, size);
         this.drawGrid(size);
     }
 
     /**
-     * Permet d'afficher sur la grille tous les elements (graines, fourmis et murs).
+     * Permet d'afficher sur le plateau tous les elements (graines, fourmis et murs).
      *
      * @param seedsArray : le tableau de graines à afficher.
      * @param qMax : le nombre maximal de graines sur une case.
@@ -284,10 +292,10 @@ public class Grid extends Pane
      */
     public void allDraw(int[][] seedsArray, int qMax, boolean[][] wallsArray, int[][] antsArray)
     {
-        this.clearGrid();
-        this.drawSeedsOnGrid(seedsArray, qMax);
-        this.drawWallsOnGrid(wallsArray);
-        this.drawAntsOnGrid(antsArray);
+        this.clearBoard();
+        this.drawSeedsOnBoard(seedsArray, qMax);
+        this.drawWallsOnBoard(wallsArray);
+        this.drawAntsOnBoard(antsArray);
         this.drawGrid();
     }
 }

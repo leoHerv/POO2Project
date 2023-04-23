@@ -16,22 +16,22 @@ import java.util.Iterator;
 
 public class Fourmiliere
 {
-    private int largeur, hauteur;
+    protected int largeur, hauteur;
     // Le nombre maximal de graines par cases
-    private int qMax ;
+    protected int qMax ;
 
     // la liste des fourmis de la fourmiliere.
     // Attention : la position X,Y d'une fourmi doit correspondre à un booleen true
     // dans le tableau fourmis
-    private List<Fourmi> lesFourmis ;
+    protected List<Fourmi> lesFourmis;
 
     // Tableaux contenant les murs, les fourmis et les graines.
     // Attention : pour un terrain [1..hauteur]x[1..largeur], ces tableaux
     // sont indicés de [0..hauteur+1][0..largeur+1], cela permet de simplifier
     // certains traitements en ne traitant pas le cas particulier des bordures.
-    private boolean murs[][];
-    private boolean fourmis[][];
-    private int qteGraines[][];
+    protected boolean murs[][];
+    protected boolean fourmis[][];
+    protected int qteGraines[][];
 
     /**
     * Crée une fourmiliere de largeur l et de hauteur h.

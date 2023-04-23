@@ -1,27 +1,39 @@
-package jeudesfourmis.vue;
+package jeudesfourmis.controller;
 
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import jeudesfourmis.model.FourmiliereModif;
+import jeudesfourmis.vue.ConfirmationAlert;
+import jeudesfourmis.vue.CustomSlider;
+import jeudesfourmis.vue.board.BoardWithZoomBoard;
+
+import java.util.Objects;
 
 public class ControlPanel extends VBox
 {
-    public ControlPanel()
+    public ControlPanel(SimpleBooleanProperty showZoomProperty, SimpleBooleanProperty displayGridProperty,
+                        SimpleBooleanProperty boardEditable, FourmiliereModif fourmiliere, BoardWithZoomBoard board,
+                                SimpleIntegerProperty nbLapsProperty)
     {
         super();
 
         // On crée le bouton pour la loupe.
         Button btnMagnifier = new Button("Loupe");
-
-        // On crée le bouton pour Pause / Play
-        Button btnPlayPause = new Button("Play / Pause");
+        btnMagnifier.setOnAction(event ->
+        {
+            showZoomProperty.setValue(!showZoomProperty.getValue());
+        });
 
         // On crée le label pour l'affichage des tours de la simulation.
+        StringNbLapsProperty stringNbLapsProperty = new StringNbLapsProperty(nbLapsProperty);
         Label labLaps = new Label("Nombres de tours de la simulation: 0");
+        labLaps.textProperty().bind(stringNbLapsProperty);
 
         // On crée les trois sliders pour modifier la taille du plateau, qMax et a vitesse.
         Label labSize = new Label("Changer la taille");
@@ -37,9 +49,12 @@ public class ControlPanel extends VBox
         HBox boxChangeSize = new HBox(textFieldSize, btnChangeSize);
 
         Label labQMax = new Label("Changer le nombre maximal de graines");
-        Slider sliderQMax = new Slider();
+        CustomSlider sliderQMax = new CustomSlider("", 10, 100, 20);
+        SimpleIntegerProperty qMaxProperty = sliderQMax.getValueProperty();
+
         Label labSpeed = new Label("Changer la vitesse de la simulation");
-        Slider sliderSpeed = new Slider();
+        CustomSlider sliderSpeed = new CustomSlider("", 1, 100, 25);
+        SimpleIntegerProperty speedProperty = sliderSpeed.getValueProperty();
 
         VBox boxModif = new VBox(labSize, boxChangeSize, labQMax, sliderQMax, labSpeed, sliderSpeed);
 
@@ -60,6 +75,10 @@ public class ControlPanel extends VBox
         Slider sliderAnts = new Slider();
         Label labWalls = new Label("Pour les murs");
         Slider sliderWalls = new Slider();
+
+        // On crée le bouton pour Pause / Play
+        ButtonEvolutionRun btnPlayPause = new ButtonEvolutionRun(fourmiliere, board, displayGridProperty,
+                boardEditable, nbLapsProperty, speedProperty);
 
         VBox boxProba = new VBox(labProba, labSeeds, sliderSeeds, labAnts, sliderAnts, labWalls, sliderWalls);
 
