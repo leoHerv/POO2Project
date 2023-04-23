@@ -277,17 +277,20 @@ public class Fourmiliere
                 // On tire au sort jusqu'a ce qu'on soit tombe sur une case vide
                 // ou bien qu'on ait essayé 99 fois.
             } while((murs[deltaY][deltaX] || fourmis[deltaY][deltaX]) && cptEssai < 100);
-            fourmis[posY][posX] = false;
-            fourmis[deltaY][deltaX] = true;
-            f.setX(deltaX);
-            f.setY(deltaY);
-            // la fourmi pose ?
-            if (f.porte() && qteGraines[deltaY][deltaX] < qMax)
+            if(cptEssai < 99)
             {
-                if (Math.random() < Fourmi.probaPose(compteGrainesVoisines(deltaX, deltaY)))
+                fourmis[posY][posX] = false;
+                fourmis[deltaY][deltaX] = true;
+                f.setX(deltaX);
+                f.setY(deltaY);
+                // la fourmi pose ?
+                if(f.porte() && qteGraines[deltaY][deltaX] < qMax)
                 {
-                    f.pose();
-                    qteGraines[deltaY][deltaX]++;
+                    if(Math.random() < Fourmi.probaPose(compteGrainesVoisines(deltaX, deltaY)))
+                    {
+                        f.pose();
+                        qteGraines[deltaY][deltaX]++;
+                    }
                 }
             }
         }

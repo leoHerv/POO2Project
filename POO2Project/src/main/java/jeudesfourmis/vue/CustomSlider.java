@@ -17,6 +17,7 @@ public class CustomSlider extends HBox
         Label label = new Label(name);
         // On crée le TextField.
         CustomTextField field = new CustomTextField(min, max);
+        field.setDisable(true);
         // On crée le slider.
         Slider slider = new Slider(min, max, min);
         slider.valueProperty().addListener((obs, oldval, newVal) -> slider.setValue(newVal.intValue()));

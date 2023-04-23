@@ -18,67 +18,10 @@ public class Controller extends Application
     @Override
     public void start(Stage primaryStage)
     {
-        int[][] seeds = new int[size][size];
-        for(int i = 0; i < size; i++)
-        {
-            int[] seed = new int[size];
-            for(int j = 0; j < size; j++)
-            {
-                if(j == 1)
-                {
-                    seed[j] = 5;
-                }
-                else
-                {
-                    seed[j] = 0;
-                }
-            }
-            seeds[i] = seed;
-        }
-
-        boolean[][] walls = new boolean[size][size];
-        for(int i = 0; i < size; i++)
-        {
-            boolean[] wall = new boolean[size];
-            for(int j = 0; j < size; j++)
-            {
-                if(j == 0)
-                {
-                    wall[j] = true;
-                }
-                else
-                {
-                    wall[j] = false;
-                }
-            }
-            walls[i] = wall;
-        }
-
-        int[][] ants = new int[size][size];
-        for(int i = 0; i < size; i++)
-        {
-            int[] ant = new int[size];
-            for(int j = 0; j < size; j++)
-            {
-                if(j == 5)
-                {
-                    ant[j] = 1;
-                }
-                else if(j == 6)
-                {
-                    ant[j] = 2;
-                }
-                else
-                {
-                    ant[j] = 0;
-                }
-            }
-            ants[i] = ant;
-        }
         FourmiliereModif fourmiliere = new FourmiliereModif(size, 10);
-        seeds = fourmiliere.getSeedsArray();
-        walls = fourmiliere.getWallsArray();
-        ants = fourmiliere.getAntsArray();
+        int[][] seeds = fourmiliere.getSeedsArray();
+        boolean[][] walls = fourmiliere.getWallsArray();
+        int[][] ants = fourmiliere.getAntsArray();
 
         SimpleBooleanProperty zoomActivationProperty = new SimpleBooleanProperty(false);
         SimpleIntegerProperty nbLapsProperty = new SimpleIntegerProperty(0);
@@ -104,35 +47,10 @@ public class Controller extends Application
         });
         BorderPane.setAlignment(btnQuit, Pos.BOTTOM_RIGHT);
 
-        Button btnTestEvolu = new Button("Evolution");
-        btnTestEvolu.setOnAction(event ->
-        {
-            //System.out.println("btnTestEvolu start");
-            //System.out.println(fourmiliere.stringFourmis());
-
-            fourmiliere.setSeedsArray(board.getSeedsArray());
-            fourmiliere.setWallsArray(board.getWallsArray());
-            fourmiliere.setAntsArray(board.getAntsArray());
-
-            //System.out.println(fourmiliere.stringFourmis());
-            fourmiliere.evolue();
-            //System.out.println(fourmiliere.stringFourmis());
-
-            board.setSeedsArray(fourmiliere.getSeedsArray());
-            board.setWallsArray(fourmiliere.getWallsArray());
-            board.setAntsArray(fourmiliere.getAntsArray());
-
-            //System.out.println(fourmiliere.stringFourmis());
-
-            //System.out.println("btnTestEvolu end");
-            board.allDraw();
-        });
-
         BorderPane base = new BorderPane();
         base.setCenter(board);
         base.setRight(controlPanel);
         base.setBottom(btnQuit);
-        base.setLeft(btnTestEvolu);
 
 
         Scene scene = new Scene(base, 1000, 700);

@@ -11,9 +11,8 @@ import javafx.scene.layout.VBox;
 import jeudesfourmis.model.FourmiliereModif;
 import jeudesfourmis.vue.ConfirmationAlert;
 import jeudesfourmis.vue.CustomSlider;
+import jeudesfourmis.vue.StringNbLapsProperty;
 import jeudesfourmis.vue.board.BoardWithZoomBoard;
-
-import java.util.Objects;
 
 public class ControlPanel extends VBox
 {
@@ -32,7 +31,7 @@ public class ControlPanel extends VBox
 
         // On crée le label pour l'affichage des tours de la simulation.
         StringNbLapsProperty stringNbLapsProperty = new StringNbLapsProperty(nbLapsProperty);
-        Label labLaps = new Label("Nombres de tours de la simulation: 0");
+        Label labLaps = new Label("Nombre de tours de la simulation: 0");
         labLaps.textProperty().bind(stringNbLapsProperty);
 
         // On crée les trois sliders pour modifier la taille du plateau, qMax et a vitesse.

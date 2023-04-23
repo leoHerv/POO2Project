@@ -48,6 +48,14 @@ public class ButtonEvolutionRun extends Button
             {
                 board.allDraw();
                 nbLapsProperty.setValue(nbLapsProperty.getValue() + 1);
+            }
+        };
+
+        Runnable checkIsSpeedChange = new Runnable()
+        {
+            @Override
+            public void run()
+            {
                 speed = speedProperty.getValue();
             }
         };
@@ -64,6 +72,7 @@ public class ButtonEvolutionRun extends Button
                     {
                         while(!boardEditable.getValue())
                         {
+                            Platform.runLater(checkIsSpeedChange);
                             fourmiliere.evolue();
 
                             board.setSeedsArray(fourmiliere.getSeedsArray());
@@ -71,6 +80,7 @@ public class ButtonEvolutionRun extends Button
                             board.setAntsArray(fourmiliere.getAntsArray());
 
                             Platform.runLater(updateBoard);
+                            Platform.runLater(checkIsSpeedChange);
                             Thread.sleep(1000L / speed);
                         }
                         return null;
