@@ -133,35 +133,6 @@ public class TestGrid extends Application
         /////////////////////////////////
         Grid gridClone = new Grid(true, 11, 20);
 
-        Button btn = new Button("Reset loupe");
-        btn.setOnAction(event ->
-        {
-            int posX = grid.getPosPointerX().getValue();
-            int posY = grid.getPosPointerY().getValue();
-
-            System.out.println(posX + " " + posY);
-
-            if(posX < 6)
-            {
-                posX = 5;
-            }
-            if(posY < 6)
-            {
-                posY = 5;
-            }
-            if(posX > size - 6)
-            {
-                posX = size - 6;
-            }
-            if(posY >= size - 6)
-            {
-                posY = size - 6;
-            }
-
-            System.out.println("Good :" + posX + " " + posY);
-
-
-        });
 
         ChangeListener<Number> xyMove = new ChangeListener<Number>()
         {
@@ -199,7 +170,6 @@ public class TestGrid extends Application
 
         BorderPane autreBase = new BorderPane();
         autreBase.setCenter(gridClone);
-        autreBase.setRight(btn);
 
         Scene autreScene = new Scene(autreBase, 500, 400);
 

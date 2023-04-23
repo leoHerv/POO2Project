@@ -5,4 +5,5 @@ module jeudesfourmis
     exports jeudesfourmis.controller;
     exports jeudesfourmis.model;
     exports jeudesfourmis.vue.tests.grid;
+    exports jeudesfourmis.vue;
 }
