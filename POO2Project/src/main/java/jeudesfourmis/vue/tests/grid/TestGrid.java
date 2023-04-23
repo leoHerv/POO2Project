@@ -2,6 +2,7 @@ package jeudesfourmis.vue.tests.grid;
 
 import javafx.application.Application;
 import javafx.beans.InvalidationListener;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -114,69 +115,29 @@ public class TestGrid extends Application
         //grid.drawAntsOnGrid(ants, start, start, end, end);
         //grid.drawGrid(start, start, end, end);
 
-        GridEditable grid = new GridEditable(true, size, seeds, 10, walls, ants);
+        SimpleBooleanProperty bp = new SimpleBooleanProperty(false);
+
+        GridEditable grid = new BoardWithZoomBoard(true, size, seeds, 10, walls, ants, bp);
         //grid.setSizeBox(20);
        //grid.allDraw();
 
         //grid.clearGrid();
 
+        Button btnZoom = new Button("Zoom");
+        btnZoom.setOnAction(event ->
+        {
+            bp.setValue(!bp.getValue());
+        });
+
         BorderPane base = new BorderPane();
         base.setCenter(grid);
+        base.setRight(btnZoom);
 
         Scene scene = new Scene(base, 700, 600);
 
         primaryStage.setTitle("Test Grid");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-
-        /////////////////////////////////
-        Grid gridClone = new Grid(true, 11, 20);
-
-
-        ChangeListener<Number> xyMove = new ChangeListener<Number>()
-        {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
-            {
-                int posX = grid.getPosPointerX().getValue();
-                int posY = grid.getPosPointerY().getValue();
-
-                System.out.println(posX + " " + posY);
-
-                if(posX < 6)
-                {
-                    posX = 5;
-                }
-                if(posY < 6)
-                {
-                    posY = 5;
-                }
-                if(posX > size - 6)
-                {
-                    posX = size - 6;
-                }
-                if(posY >= size - 6)
-                {
-                    posY = size - 6;
-                }
-
-                gridClone.allDraw(seeds, 10, walls, ants, posX - 5, posY - 5, 11);
-            }
-        };
-
-        grid.getPosPointerX().addListener(xyMove);
-        grid.getPosPointerY().addListener(xyMove);
-
-        BorderPane autreBase = new BorderPane();
-        autreBase.setCenter(gridClone);
-
-        Scene autreScene = new Scene(autreBase, 500, 400);
-
-        Stage autreStage = new Stage();
-        autreStage.setTitle("Autre scene");
-        autreStage.setScene(autreScene);
-        autreStage.show();
     }
 
     public static void main(String[] args)

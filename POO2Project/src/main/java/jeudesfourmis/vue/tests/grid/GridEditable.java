@@ -176,9 +176,11 @@ public class GridEditable extends Grid
         this.addEventHandler(MouseEvent.MOUSE_RELEASED, handleEndDrag);
         this.addEventHandler(MouseEvent.MOUSE_DRAGGED, handleOnDrag);
 
-        this.addEventHandler(MouseEvent.MOUSE_MOVED, handlePosPointer);
+        this.addEventHandler(MouseEvent.ANY, handlePosPointer);
 
         this.addEventHandler(ScrollEvent.SCROLL, handleOnScroll);
+
+        this.allDraw();
     }
 
     /**
