@@ -147,27 +147,30 @@ public class BoardEditable extends Board
             @Override
             public void handle(ScrollEvent event)
             {
-                int x = (int) event.getX();
-                int y = (int) event.getY();
-
-                int caseX = x / sizeBoxProperty.getValue();
-                int caseY = y / sizeBoxProperty.getValue();
-
-                int sizeBoard = sizeBoardProperty.getValue();
-
-                int yScroll = (int) event.getDeltaY();
-
-                if(caseX >= 0 && caseY >= 0 && caseX < sizeBoard && caseY < sizeBoard && yScroll != 0)
+                if(isEditableProperty.getValue())
                 {
-                    if(yScroll > 0)
+                    int x = (int) event.getX();
+                    int y = (int) event.getY();
+
+                    int caseX = x / sizeBoxProperty.getValue();
+                    int caseY = y / sizeBoxProperty.getValue();
+
+                    int sizeBoard = sizeBoardProperty.getValue();
+
+                    int yScroll = (int) event.getDeltaY();
+
+                    if(caseX >= 0 && caseY >= 0 && caseX < sizeBoard && caseY < sizeBoard && yScroll != 0)
                     {
-                        setSeeds(caseX, caseY, 1);
+                        if(yScroll > 0)
+                        {
+                            setSeeds(caseX, caseY, 1);
+                        }
+                        if(yScroll < 0)
+                        {
+                            setSeeds(caseX, caseY, -1);
+                        }
+                        allDraw();
                     }
-                    if(yScroll < 0)
-                    {
-                        setSeeds(caseX, caseY, -1);
-                    }
-                    allDraw();
                 }
             }
         };

@@ -19,6 +19,18 @@ public class FourmiliereModif extends Fourmiliere
         this.sizeBoard = sizeBoard;
     }
 
+    public void setNewFourmiliere(FourmiliereModif f)
+    {
+        this.largeur = f.largeur;
+        this.hauteur = f.hauteur;
+        this.sizeBoard = f.sizeBoard;
+        this.qMax = f.qMax;
+        this.lesFourmis = f.lesFourmis;
+        this.murs = f.murs;
+        this.fourmis = f.fourmis;
+        this.qteGraines = f.qteGraines;
+    }
+
     public int[][] reverseArray(int[][] array)
     {
         int[][] newArray = new int[sizeBoard][sizeBoard];

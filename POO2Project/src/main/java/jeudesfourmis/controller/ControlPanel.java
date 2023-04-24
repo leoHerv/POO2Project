@@ -16,11 +16,15 @@ import jeudesfourmis.vue.board.BoardWithZoomBoard;
 
 public class ControlPanel extends VBox
 {
+
+    protected FourmiliereModif fourmiliere;
+
     public ControlPanel(SimpleBooleanProperty showZoomProperty, SimpleBooleanProperty displayGridProperty,
                         SimpleBooleanProperty boardEditable, FourmiliereModif fourmiliere, BoardWithZoomBoard board,
                                 SimpleIntegerProperty nbLapsProperty)
     {
         super();
+        this.fourmiliere = fourmiliere;
 
         // On crée le bouton pour la loupe.
         Button btnMagnifier = new Button("Loupe");
@@ -34,18 +38,20 @@ public class ControlPanel extends VBox
         Label labLaps = new Label("Nombre de tours de la simulation: 0");
         labLaps.textProperty().bind(stringNbLapsProperty);
 
-        // On crée les trois sliders pour modifier la taille du plateau, qMax et a vitesse.
+        // On crée les trois sliders pour modifier la taille du plateau, qMax et de la vitesse de la simulation.
         Label labSize = new Label("Changer la taille");
-        TextField textFieldSize = new TextField("50");
+        CustomSlider sliderSize = new CustomSlider("", 20, 100, 20);
+        SimpleIntegerProperty sizeProperty = sliderSize.getValueProperty();
         Button btnChangeSize = new Button("Confirmer la nouvelle taille");
         SimpleBooleanProperty changeSizeActionProperty = new SimpleBooleanProperty(false);
         btnChangeSize.setOnAction(event ->
         {
             ConfirmationAlert sizeConfirmation = new ConfirmationAlert("Taille",
                     "Voulez vous changer la taille du plateau ?", changeSizeActionProperty);
+            UpdateBoardAndAnthill.changeSizeBoardAndAnthill(sizeProperty.getValue(), fourmiliere, board, changeSizeActionProperty);
         });
 
-        HBox boxChangeSize = new HBox(textFieldSize, btnChangeSize);
+        HBox boxChangeSize = new HBox(sliderSize, btnChangeSize);
 
         Label labQMax = new Label("Changer le nombre maximal de graines");
         CustomSlider sliderQMax = new CustomSlider("", 10, 100, 20);
@@ -64,6 +70,8 @@ public class ControlPanel extends VBox
         {
             ConfirmationAlert resetConfirmation = new ConfirmationAlert("Reset",
                     "Voulez vous reset le plateau ?", resetActionProperty);
+            UpdateBoardAndAnthill.resetBoardAndAnthill(fourmiliere, board, resetActionProperty);
+            nbLapsProperty.setValue(0);
         });
 
         // On crée les sliders de probabilité pour les graines, fourmis et les murs.
@@ -75,11 +83,12 @@ public class ControlPanel extends VBox
         Label labWalls = new Label("Pour les murs");
         Slider sliderWalls = new Slider();
 
+        VBox boxProba = new VBox(labProba, labSeeds, sliderSeeds, labAnts, sliderAnts, labWalls, sliderWalls);
+
         // On crée le bouton pour Pause / Play
         ButtonEvolutionRun btnPlayPause = new ButtonEvolutionRun(fourmiliere, board, displayGridProperty,
                 boardEditable, nbLapsProperty, speedProperty);
 
-        VBox boxProba = new VBox(labProba, labSeeds, sliderSeeds, labAnts, sliderAnts, labWalls, sliderWalls);
 
         this.getChildren().addAll(btnMagnifier, btnPlayPause, labLaps, boxModif, btnReset, boxProba);
         this.setStyle("-fx-spacing: 30px;");
