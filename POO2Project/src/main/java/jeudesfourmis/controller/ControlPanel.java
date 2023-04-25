@@ -40,7 +40,7 @@ public class ControlPanel extends VBox
 
         // On crée les trois sliders pour modifier la taille du plateau, qMax et de la vitesse de la simulation.
         Label labSize = new Label("Changer la taille");
-        CustomSlider sliderSize = new CustomSlider("", 20, 100, 20);
+        CustomSlider sliderSize = new CustomSlider("", 20, 80, 20);
         SimpleIntegerProperty sizeProperty = sliderSize.getValueProperty();
         Button btnChangeSize = new Button("Confirmer la nouvelle taille");
         SimpleBooleanProperty changeSizeActionProperty = new SimpleBooleanProperty(false);
@@ -56,12 +56,17 @@ public class ControlPanel extends VBox
         Label labQMax = new Label("Changer le nombre maximal de graines");
         CustomSlider sliderQMax = new CustomSlider("", 10, 100, 20);
         SimpleIntegerProperty qMaxProperty = sliderQMax.getValueProperty();
+        Button btnChangeQMax = new Button("Ok");
+        btnChangeQMax.setOnAction(event ->
+        {
+            UpdateBoardAndAnthill.changeQMaxBoardAndAnthill(qMaxProperty.getValue(), fourmiliere, board);
+        });
 
         Label labSpeed = new Label("Changer la vitesse de la simulation");
         CustomSlider sliderSpeed = new CustomSlider("", 1, 100, 25);
         SimpleIntegerProperty speedProperty = sliderSpeed.getValueProperty();
 
-        VBox boxModif = new VBox(labSize, boxChangeSize, labQMax, sliderQMax, labSpeed, sliderSpeed);
+        VBox boxModif = new VBox(labSize, boxChangeSize, labQMax, sliderQMax, btnChangeQMax, labSpeed, sliderSpeed);
 
         // On crée le bouton de reset.
         Button btnReset = new Button("Reset");

@@ -276,8 +276,10 @@ public class Fourmiliere
                 }
                 // On tire au sort jusqu'a ce qu'on soit tombe sur une case vide
                 // ou bien qu'on ait essayé 99 fois.
-            } while((murs[deltaY][deltaX] || fourmis[deltaY][deltaX]) && cptEssai < 100);
-            if(cptEssai < 99)
+            } while((deltaX < 0 || deltaY < 0 || deltaX > largeur + 1 || deltaY > hauteur + 1 || murs[deltaY][deltaX]
+                    || fourmis[deltaY][deltaX]) && cptEssai < 100);
+
+            if(cptEssai < 99 && (deltaX >= 0 && deltaY >= 0 && (deltaX <= largeur + 1) && (deltaY <= hauteur + 1)))
             {
                 fourmis[posY][posX] = false;
                 fourmis[deltaY][deltaX] = true;

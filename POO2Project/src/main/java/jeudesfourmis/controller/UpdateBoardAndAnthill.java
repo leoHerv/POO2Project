@@ -62,6 +62,25 @@ public class UpdateBoardAndAnthill
         return null;
     }
 
+    public static int[][] arrayRespectLimiteMax(int[][] array, int limite)
+    {
+        if(limite > 0)
+        {
+            int size = array.length;
+            for(int i = 0; i < size; i++)
+            {
+                for(int j = 0; j < size; j++)
+                {
+                    if(array[i][j] >= limite)
+                    {
+                        array[i][j] = limite - 1;
+                    }
+                }
+            }
+        }
+        return array;
+    }
+
     public static void resetBoardAndAnthill(FourmiliereModif anthill, BoardWithZoomBoard board, SimpleBooleanProperty resetProperty)
     {
         if(resetProperty.getValue())
@@ -89,10 +108,7 @@ public class UpdateBoardAndAnthill
             boolean[][] newWallsArray = reSizeArray(board.getWallsArray(), oldSize, newSize);
             int[][] newAntsArray = reSizeArray(board.getAntsArray(), oldSize, newSize);
 
-            System.out.println("après: " + newSeedsArray.length + " " + newWallsArray.length);
-
             anthill.setNewFourmiliere(new FourmiliereModif(newSize, anthill.getQMax()));
-            System.out.println(anthill.getHauteur() + " " + anthill.getLargeur() + " size: " + newSize);
 
             board.setBoardSize(newSize);
             board.setSeedsArray(newSeedsArray);
@@ -107,6 +123,19 @@ public class UpdateBoardAndAnthill
 
             changeSizeProperty.setValue(false);
         }
+    }
+
+    public static void changeQMaxBoardAndAnthill(int newQMax, FourmiliereModif anthill, BoardWithZoomBoard board)
+    {
+        anthill.setNewFourmiliere(new FourmiliereModif(anthill.getHauteur() + 2, newQMax));
+
+        anthill.setSeedsArray(arrayRespectLimiteMax(board.getSeedsArray(), newQMax));
+        anthill.setWallsArray(board.getWallsArray());
+        anthill.setAntsArray(board.getAntsArray());
+
+        board.setqMax(newQMax);
+
+        board.allDraw();
     }
 
 }

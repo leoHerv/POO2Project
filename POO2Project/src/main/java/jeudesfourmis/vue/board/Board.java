@@ -20,7 +20,7 @@ public class Board extends Pane
     public static final int RGB_SEED_RED = 255;
 
     public static final int BOX_SIZE = 10;
-    public static final String BOARD_STYLE = "-fx-background-color: ghostwhite;";
+    public static final String BOARD_STYLE = "-fx-background-color: ghostwhite; -fx-border-color: black; -fx-border-width: 1px;";
     public static final String LINE_STYLE = "-fx-fill : black;";
 
     protected final SimpleBooleanProperty displayGridProperty;
