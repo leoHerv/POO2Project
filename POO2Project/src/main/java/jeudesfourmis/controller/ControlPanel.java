@@ -4,8 +4,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import jeudesfourmis.model.FourmiliereModif;
@@ -97,7 +95,7 @@ public class ControlPanel extends VBox
         //============================================================================================================//
         // On crée les sliders de probabilité pour les graines, fourmis et les murs.
         //============================================================================================================//
-        Label labProba = new Label("Changer les probabilités d'apparitions");
+        Label labProba = new Label("Changer les probabilites d'apparitions");
         Label labSeeds = new Label("Pour les graines");
         CustomSlider sliderSeeds = new CustomSlider("", 0, 100, 25);
         Label labWalls = new Label("Pour les murs");
@@ -107,11 +105,11 @@ public class ControlPanel extends VBox
         Label labEmpty = new Label("Pour les cases vides");
         CustomSlider sliderEmpty = new CustomSlider("", 0, 100, 25);
 
-        Button btnRandomMap = new Button("Plateau aléatoire");
+        Button btnRandomMap = new Button("Plateau aleatoire");
         SimpleBooleanProperty randomMapActionProperty = new SimpleBooleanProperty(false);
         btnRandomMap.setOnAction(event ->
         {
-            ConfirmationAlert randomMapConfirmation = new ConfirmationAlert("Plateau aléatoire",
+            ConfirmationAlert randomMapConfirmation = new ConfirmationAlert("Plateau aleatoire",
                     "Voulez vous randomiser le plateau ?", randomMapActionProperty);
             UpdateBoardAndAnthill.getRandomMap(fourmiliere, board, sliderSeeds.getValueProperty(), sliderWalls.getValueProperty(),
                     sliderAnts.getValueProperty(), randomMapActionProperty, sliderEmpty.getValueProperty());
