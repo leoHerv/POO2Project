@@ -67,6 +67,14 @@ public class Board extends Pane
     }
 
     /**
+     * Retourne la taille du plateau.
+     */
+    public int getBoardSize()
+    {
+        return this.sizeBoardProperty.getValue();
+    }
+
+    /**
      * Permet de changer la taille des cases du plateau.
      *
      * @param sizeBox : la nouvelle taille des cases.

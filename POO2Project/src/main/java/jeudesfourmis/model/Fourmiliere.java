@@ -47,28 +47,28 @@ public class Fourmiliere
 
         this.lesFourmis = new LinkedList<Fourmi>();
 
-        this.fourmis = new boolean[hauteur + 2][largeur + 2];
-        for (int i = 0; i < hauteur + 2; i++)
+        this.fourmis = new boolean[hauteur][largeur];
+        for (int i = 0; i < hauteur; i++)
         {
-            for (int j = 0; j < largeur + 2; j++)
+            for (int j = 0; j < largeur; j++)
             {
                 this.fourmis[i][j] = false;
             }
         }
 
-        this.murs = new boolean[hauteur + 2][largeur + 2];
-        for (int i = 0; i < hauteur + 2; i++)
+        this.murs = new boolean[hauteur][largeur];
+        for (int i = 0; i < hauteur; i++)
         {
-            for (int j = 0; j < largeur + 2; j++)
+            for (int j = 0; j < largeur; j++)
             {
-                this.murs[i][j] = (i == 0) || (i == hauteur + 1) || (j == 0) || (j == largeur + 1);
+                this.murs[i][j] = false;
             }
         }
 
-        this.qteGraines = new int[hauteur + 2][largeur + 2];
-        for (int i = 0; i < hauteur + 2; i++)
+        this.qteGraines = new int[hauteur][largeur];
+        for (int i = 0; i < hauteur; i++)
         {
-            for (int j = 0; j < largeur + 2; j++)
+            for (int j = 0; j < largeur; j++)
             {
                 this.qteGraines[i][j] = 0;
             }
@@ -187,15 +187,18 @@ public class Fourmiliere
     */
     private int compteGrainesVoisines(int x, int y)
     {
-        assert (x>0 && x <hauteur+1 && y > 0 && y <largeur+1);
+        assert (x > 0 && x < hauteur - 1 && y > 0 && y < largeur - 1);
         int nb = 0;
         for (int vx = -1; vx < 2; vx++)
         {
             for (int vy = -1; vy < 2; vy++)
             {
-                if (!murs[y + vy][x + vx])
+                if(!((y + vy) < 0 || (x + vx) < 0 || (x + vx) > largeur - 1 || (y + vy) > hauteur - 1))
                 {
-                    nb = nb + qteGraines[y + vy][x + vx];
+                    if(!murs[y + vy][x + vx])
+                    {
+                        nb = nb + qteGraines[y + vy][x + vx];
+                    }
                 }
             }
         }
@@ -226,7 +229,7 @@ public class Fourmiliere
             // la fourmi f prend ?
             if (!f.porte() &&  qteGraines[f.getY()][f.getX()]>0)
             {
-                if (Math.random()<Fourmi.probaPrend(compteGrainesVoisines(posX,posY)))
+                if (Math.random() < Fourmi.probaPrend(compteGrainesVoisines(posX,posY)))
                 {
                     f.prend();
                     qteGraines[posY][posX]--;
@@ -276,10 +279,10 @@ public class Fourmiliere
                 }
                 // On tire au sort jusqu'a ce qu'on soit tombe sur une case vide
                 // ou bien qu'on ait essayé 99 fois.
-            } while((deltaX < 0 || deltaY < 0 || deltaX > largeur + 1 || deltaY > hauteur + 1 || murs[deltaY][deltaX]
+            } while((deltaX < 0 || deltaY < 0 || deltaX > largeur - 1 || deltaY > hauteur- 1 || murs[deltaY][deltaX]
                     || fourmis[deltaY][deltaX]) && cptEssai < 100);
 
-            if(cptEssai < 99 && (deltaX >= 0 && deltaY >= 0 && (deltaX <= largeur + 1) && (deltaY <= hauteur + 1)))
+            if(cptEssai < 99 && (deltaX >= 0 && deltaY >= 0 && (deltaX <= largeur - 1) && (deltaY <= hauteur - 1)))
             {
                 fourmis[posY][posX] = false;
                 fourmis[deltaY][deltaX] = true;
@@ -308,9 +311,9 @@ public class Fourmiliere
     public String stringGraines()
     {
         String res = "";
-        for (int i = 0; i < hauteur + 2; i++)
+        for (int i = 0; i < hauteur; i++)
         {
-            for (int j = 0; j < largeur + 2; j++)
+            for (int j = 0; j < largeur; j++)
             {
                 if (murs[i][j])
                 {
@@ -342,9 +345,9 @@ public class Fourmiliere
     public String stringFourmis()
     {
         String res = "";
-        for (int i =0 ; i < hauteur + 2; i++)
+        for (int i =0 ; i < hauteur; i++)
         {
-            for (int j =0 ; j < largeur + 2; j++)
+            for (int j =0 ; j < largeur; j++)
             {
                 if (murs[i][j])
                 {
@@ -371,9 +374,9 @@ public class Fourmiliere
     public String stringMurs()
     {
         String res = "";
-        for (int i = 0; i < hauteur + 2; i++)
+        for (int i = 0; i < hauteur; i++)
         {
-            for (int j = 0; j < largeur + 2; j++)
+            for (int j = 0; j < largeur; j++)
             {
                 res = res + (murs[i][j] ? "X" : ".");
             }

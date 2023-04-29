@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import jeudesfourmis.model.FourmiliereModif;
 import jeudesfourmis.vue.board.BoardWithZoomBoard;
 
@@ -23,9 +24,12 @@ public class ButtonEvolutionRun extends Button
     protected SimpleIntegerProperty speedProperty;
     protected int speed;
 
+    protected VBox boxToDisableInPlayMode;
+
     public ButtonEvolutionRun(FourmiliereModif fourmiliere, BoardWithZoomBoard board,
                               SimpleBooleanProperty displayGridProperty, SimpleBooleanProperty boardEditable,
-                              SimpleIntegerProperty nbLapsProperty, SimpleIntegerProperty speedProperty)
+                              SimpleIntegerProperty nbLapsProperty, SimpleIntegerProperty speedProperty,
+                              VBox boxToDisableInPlayMode)
     {
         super("Play");
         this.fourmiliere = fourmiliere;
@@ -35,6 +39,7 @@ public class ButtonEvolutionRun extends Button
         this.nbLapsProperty = nbLapsProperty;
         this.speedProperty = speedProperty;
         this.speed = 1;
+        this.boxToDisableInPlayMode = boxToDisableInPlayMode;
         this.setTache();
         this.setAction();
     }
@@ -111,6 +116,7 @@ public class ButtonEvolutionRun extends Button
                 this.displayGridProperty.setValue(false);
                 this.boardEditable.setValue(false);
                 this.setText("Pause");
+                this.boxToDisableInPlayMode.setDisable(true);
                 // On prepare la simulation.
                 this.service.stateProperty().addListener((ObservableValue, oldValue, newValue) ->
                 {
@@ -123,6 +129,14 @@ public class ButtonEvolutionRun extends Button
                             break;
                     }
                 });
+
+                // On applique les modifications que l'on a faite à la fourmiliere.
+                fourmiliere.setSeedsArray(board.getSeedsArray());
+                fourmiliere.setWallsArray(board.getWallsArray());
+                fourmiliere.setAntsArray(board.getAntsArray());
+
+                // On lance la simulation.
+                this.service.start();
             }
             else
             {
@@ -130,14 +144,9 @@ public class ButtonEvolutionRun extends Button
                 this.displayGridProperty.setValue(true);
                 this.boardEditable.setValue(true);
                 this.setText("Play");
+                this.boxToDisableInPlayMode.setDisable(false);
             }
-            // On applique les modifications que l'on a faite à la fourmiliere.
-            fourmiliere.setSeedsArray(board.getSeedsArray());
-            fourmiliere.setWallsArray(board.getWallsArray());
-            fourmiliere.setAntsArray(board.getAntsArray());
 
-            // On lance la simulation.
-            this.service.start();
         });
     }
 }

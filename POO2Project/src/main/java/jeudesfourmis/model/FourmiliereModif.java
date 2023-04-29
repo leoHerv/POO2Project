@@ -15,7 +15,7 @@ public class FourmiliereModif extends Fourmiliere
      */
     public FourmiliereModif(int sizeBoard, int qMax)
     {
-        super(sizeBoard - 2, sizeBoard - 2, qMax);
+        super(sizeBoard, sizeBoard, qMax);
         this.sizeBoard = sizeBoard;
     }
 

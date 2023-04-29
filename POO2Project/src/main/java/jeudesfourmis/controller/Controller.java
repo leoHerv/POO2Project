@@ -53,7 +53,7 @@ public class Controller extends Application
         base.setBottom(btnQuit);
 
 
-        Scene scene = new Scene(base, 1000, 700);
+        Scene scene = new Scene(base, 1200, 800);
         primaryStage.setTitle("La Fourmilière");
         primaryStage.setScene(scene);
         primaryStage.show();

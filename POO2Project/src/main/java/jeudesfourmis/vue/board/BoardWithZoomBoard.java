@@ -34,7 +34,7 @@ public class BoardWithZoomBoard extends BoardEditable
         stageZoom.setScene(sceneZoom);
         stageZoom.setResizable(false);
 
-        // Si on appuie sur le bouton loupe on montre le plateau.
+        // Si on appuie sur le bouton loupe, on montre le plateau.
         showZoomProperty.addListener(event ->
         {
             boolean show = showZoomProperty.getValue();
@@ -48,7 +48,7 @@ public class BoardWithZoomBoard extends BoardEditable
             }
         });
 
-        // Si la valeur du curseur principale change alors on change l'affichage du plateau de zoom.
+        // Si la valeur du curseur principal change alors, on change l'affichage du plateau de zoom.
         BoardWithZoomBoard board = this;
 
         ChangeListener<Number> xyMove = new ChangeListener<Number>()
