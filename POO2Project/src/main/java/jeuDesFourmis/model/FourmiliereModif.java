@@ -1,4 +1,4 @@
-package jeudesfourmis.model;
+package jeuDesFourmis.model;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package jeudesfourmis.controller;
+package jeuDesFourmis.controller;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -6,11 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import jeudesfourmis.model.FourmiliereModif;
-import jeudesfourmis.vue.ConfirmationAlert;
-import jeudesfourmis.vue.CustomSlider;
-import jeudesfourmis.vue.StringNbLapsProperty;
-import jeudesfourmis.vue.board.BoardWithZoomBoard;
+import jeuDesFourmis.model.FourmiliereModif;
+import jeuDesFourmis.vue.ConfirmationAlert;
+import jeuDesFourmis.vue.CustomSlider;
+import jeuDesFourmis.vue.StringNbLapsProperty;
+import jeuDesFourmis.vue.board.BoardWithZoomBoard;
 
 public class ControlPanel extends VBox
 {

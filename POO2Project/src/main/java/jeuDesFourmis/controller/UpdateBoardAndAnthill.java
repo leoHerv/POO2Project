@@ -1,9 +1,9 @@
-package jeudesfourmis.controller;
+package jeuDesFourmis.controller;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import jeudesfourmis.model.FourmiliereModif;
-import jeudesfourmis.vue.board.BoardWithZoomBoard;
+import jeuDesFourmis.model.FourmiliereModif;
+import jeuDesFourmis.vue.board.BoardWithZoomBoard;
 
 import java.util.Random;
 

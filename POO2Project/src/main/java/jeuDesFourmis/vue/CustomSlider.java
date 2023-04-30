@@ -1,4 +1,4 @@
-package jeudesfourmis.vue;
+package jeuDesFourmis.vue;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Label;

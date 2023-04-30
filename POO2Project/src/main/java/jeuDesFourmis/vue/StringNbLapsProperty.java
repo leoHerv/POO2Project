@@ -1,4 +1,4 @@
-package jeudesfourmis.vue;
+package jeuDesFourmis.vue;
 
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleIntegerProperty;

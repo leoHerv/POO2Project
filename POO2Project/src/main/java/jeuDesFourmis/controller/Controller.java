@@ -1,4 +1,4 @@
-package jeudesfourmis.controller;
+package jeuDesFourmis.controller;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -9,8 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import jeudesfourmis.model.FourmiliereModif;
-import jeudesfourmis.vue.board.BoardWithZoomBoard;
+import jeuDesFourmis.model.FourmiliereModif;
+import jeuDesFourmis.vue.board.BoardWithZoomBoard;
 
 public class Controller extends Application
 {

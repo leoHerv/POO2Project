@@ -1,4 +1,4 @@
-package jeudesfourmis.vue;
+package jeuDesFourmis.vue;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.Alert;

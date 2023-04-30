@@ -1,4 +1,4 @@
-package jeudesfourmis.model;
+package jeuDesFourmis.model;
 
 /** 
  * Classe de gestion de fourmis

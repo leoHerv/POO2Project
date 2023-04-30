@@ -1,13 +1,7 @@
-package jeudesfourmis.vue.board;
+package jeuDesFourmis.vue.board;
 
 import javafx.application.Application;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import jeudesfourmis.vue.board.BoardEditable;
-import jeudesfourmis.vue.board.BoardWithZoomBoard;
 
 public class TestGrid extends Application
 {
